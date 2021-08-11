@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\Área de Trabalho\\PUC\\LIC_Progs_1"
+		},
+		{
+			"path": "..\\..\\..\\Área de Trabalho\\PUC\\LIC_Progs_2"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"EXP06.C": "cpp",
+			"RVC06.C": "cpp"
+		}
+	}
+}
