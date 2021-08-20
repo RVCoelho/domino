@@ -7,7 +7,6 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28]);
 void geraPeca(pecas Tpecas[28]);
 void embaralha(pecas Tpecas[28]);
 void distribui(pecas Tpecas[28]);
-//int Maiorpeca(pecas Tepcas[28]);
 
 
 
@@ -22,9 +21,10 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28])
 			geraPeca(Tpecas);
 			embaralha(Tpecas);
 			distribui(Tpecas);
-			Maiorpeca(Tpecas);
-			printf("-----------\n");
-			printf("\n%d", Maiorpeca(Tpecas));
+			PrimeiraJogada(Tpecas, pecaMesa);
+			mostraPrimeiroJogador(Tpecas, pecaMesa);
+			apresentaMesa(Tpecas,pecaMesa);
+			Jogada(Tpecas, pecaMesa);
 			break;
 			
 		case 2:
@@ -87,7 +87,7 @@ void distribui(pecas Tpecas[28])
 	{
 		Tpecas[i].local='n';
 	}
-	//faz a distribuicao das pecas para a mao do j=jogador, a=adversario, d=deposito
+	//faz a distribuicao das pecas para a mao do j=jogador, a=adversario, d=deposito, m=mesa
 	for(i=0;i<28;i++)
 	{
 		if(i<7)
@@ -101,37 +101,4 @@ void distribui(pecas Tpecas[28])
 	
 }
 
-/*int Maiorpeca(pecas Tpecas[28])
-{
-	int i, x=0, maior=0;
-	
-	for(i=0;i<28;i++)
-	{
-		if(Tpecas[i].local=='j')
-			printf("%d- (%d | %d ) ", i,  Tpecas[i].peca[0], Tpecas[i].peca[1]);
-	}
-	printf("\n");
-	for(i=0;i<28;i++)
-	{
-		if(Tpecas[i].local=='a')
-			printf("%d-  (%d | %d ) ", i, Tpecas[i].peca[0], Tpecas[i].peca[1]);
-	}
-	
-	printf("\n");
-	for(i=0;i<28;i++)
-	{
-		if(Tpecas[i].local=='j'||Tpecas[i].local=='a')
-		{
-			if(Tpecas[i].peca[0]==Tpecas[i].peca[1])
-			{
-				if(Tpecas[i].peca[0]>maior)
-				{
-					maior=Tpecas[i].peca[1];
-					x=i;
-				}
-			}
-			
-		}
-	}
-	return x;
-}*/
+
