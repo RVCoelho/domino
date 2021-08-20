@@ -12,6 +12,8 @@ typedef struct gera
 typedef struct tabuleiro
 {
 	int ladoE;
-	int ladoD;	
+	int ladoD;
+	int pecaJogada[2];
+	int rodadas;	
 	
 }mesa;
