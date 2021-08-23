@@ -7,8 +7,7 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28]);
 void geraPeca(pecas Tpecas[28]);
 void embaralha(pecas Tpecas[28]);
 void distribui(pecas Tpecas[28]);
-
-
+void compraPeca(pecas Tpecas[28], mesa pecaMesa[28]);
 
 
 void Domino(pecas Tpecas[28], mesa pecaMesa[28])
@@ -98,8 +97,48 @@ void distribui(pecas Tpecas[28])
 		else
 		Tpecas[i].local='d';
 	}
-	
-	
 }
 
-
+void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
+{
+	int i=0, x;
+	printf("teste\n");
+	x=PrimeiraJogada(Tpecas, pecaMesa);
+	if(x==2)
+	{
+		for(i=0; i<28; i++)
+		{
+			do
+			{
+				if(Tpecas[i].local='d')
+				{
+					for(i=28; i>=0; i--)
+						if(Tpecas[i].local='j')
+						{
+							Tpecas[i+1].peca[0]='j';
+							Tpecas[i+1].peca[1]='j';
+						}
+				}
+			}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
+			break;
+		}
+	}
+	if(x==1)
+	{
+		for(i=0; i<28; i++)
+		{
+			do
+			{
+				if(Tpecas[i].local='d')
+				{
+					for(i=28; i>=0; i--)
+						if(Tpecas[i].local='a')
+						{
+							Tpecas[i+1].peca[0]='a';
+							Tpecas[i+1].peca[1]='a';
+						}
+				}
+			}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
+		}
+	}
+}
