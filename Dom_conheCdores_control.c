@@ -23,8 +23,9 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28])
 			distribui(Tpecas);
 			PrimeiraJogada(Tpecas, pecaMesa);
 			mostraPrimeiroJogador(Tpecas, pecaMesa);
-			apresentaMesa(Tpecas,pecaMesa);
-			Jogada(Tpecas, pecaMesa);
+			apresentaMesa(Tpecas, pecaMesa);
+			pecasJogador(Tpecas, pecaMesa);
+			Jogadas(Tpecas,pecaMesa);
 			break;
 			
 		case 2:
