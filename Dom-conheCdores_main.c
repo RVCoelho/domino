@@ -1,4 +1,4 @@
-// jogo DOMINÓ 
+// jogo DOMINÃ“ 
 //Grupo: conheCdores
 //Victor Padilha
 //Arthur Bonjardim
@@ -15,6 +15,7 @@
 
 
 int main()
+
 {
 	pecas Tpecas[28];
 	mesa pecaMesa[28];
@@ -23,4 +24,3 @@ int main()
 	
 return 0;
 }
-
