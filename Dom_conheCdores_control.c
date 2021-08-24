@@ -101,44 +101,85 @@ void distribui(pecas Tpecas[28])
 
 void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
 {
-	int i=0, x;
-	printf("teste\n");
+	int i=0, x, k, cont;
 	x=PrimeiraJogada(Tpecas, pecaMesa);
 	if(x==2)
 	{
-		for(i=0; i<28; i++)
+		do
 		{
-			do
+			for(i=0; i<28; i++)
 			{
-				if(Tpecas[i].local='d')
+				if(Tpecas[i].local=='d')
 				{
-					for(i=28; i>=0; i--)
-						if(Tpecas[i].local='j')
+					for(k=28; k>=0; k--)
+					{
+						if(Tpecas[k].local=='a')
+							cont++;
+						else if(Tpecas[k].local=='j')
 						{
-							Tpecas[i+1].peca[0]='j';
-							Tpecas[i+1].peca[1]='j';
+							if(Tpecas[k+1].local=='d')
+							{
+								Tpecas[k+1].local='j';
+								printf("\n%d- ( %d | %d )", k+1, Tpecas[k+1].peca[0], Tpecas[k+1].peca[1]);
+								if(Tpecas[k+1].peca[0] != pecaMesa[28].ladoD || Tpecas[k+1].peca[0] != pecaMesa[28].ladoE || Tpecas[k+1].peca[1] != pecaMesa[28].ladoD || Tpecas[k+1].peca[1] != pecaMesa[28].ladoE)
+									printf("\nA peca comprada nao pode ser jogada. Outra peca sera comprada!");
+									k--;
+								if(Tpecas[k+1].peca[0] == pecaMesa[28].ladoD || Tpecas[k+1].peca[0] == pecaMesa[28].ladoE || Tpecas[k+1].peca[1] == pecaMesa[28].ladoD || Tpecas[k+1].peca[1] == pecaMesa[28].ladoE)
+									printf("\nEssa peca pode ser jogada!");
+							}
+							else if(Tpecas[k+1].local=='a')
+								Tpecas[k+cont+1].local='j';
+								printf("\n%d- ( %d | %d )", k+cont+1, Tpecas[k+cont+1].peca[0], Tpecas[k+cont+1].peca[1]);
+								if(Tpecas[k+cont+1].peca[0] != pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[0] != pecaMesa[28].ladoE || Tpecas[k+cont+1].peca[1] != pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[1] != pecaMesa[28].ladoE)
+									printf("\nA peca comprada nao pode ser jogada. Outra peca sera comprada!");
+									k--;
+								if(Tpecas[k+cont+1].peca[0] == pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[0] == pecaMesa[28].ladoE || Tpecas[k+cont+1].peca[1] == pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[1] == pecaMesa[28].ladoE)
+									printf("\nEssa peca pode ser jogada!");
 						}
+					}
 				}
-			}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
-			break;
-		}
+			}
+		}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
+		//while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
+		//faz o loop de comprar peça até possuir uma peça que possui um número que pode ser jogado
 	}
-	if(x==1)
+	else if(x==1)
 	{
-		for(i=0; i<28; i++)
+		do
 		{
-			do
+			for(i=0; i<28; i++)
 			{
-				if(Tpecas[i].local='d')
+				if(Tpecas[i].local=='d')
 				{
-					for(i=28; i>=0; i--)
-						if(Tpecas[i].local='a')
+					for(k=28; k>=0; k--)
+					{
+						if(Tpecas[k].local=='j')
+							cont++;
+						else if(Tpecas[k].local=='a')
 						{
-							Tpecas[i+1].peca[0]='a';
-							Tpecas[i+1].peca[1]='a';
+							if(Tpecas[k+1].local=='d')
+							{
+								Tpecas[k+1].local='a';
+								printf("\n%d- ( %d | %d )", k+1, Tpecas[k+1].peca[0], Tpecas[k+1].peca[1]);
+								if(Tpecas[k+1].peca[0] != pecaMesa[28].ladoD || Tpecas[k+1].peca[0] != pecaMesa[28].ladoE || Tpecas[k+1].peca[1] != pecaMesa[28].ladoD || Tpecas[k+1].peca[1] != pecaMesa[28].ladoE)
+									printf("\nA peca comprada nao pode ser jogada! voce tem que comprar outra peca!");
+									k--;
+								if(Tpecas[k+1].peca[0] == pecaMesa[28].ladoD || Tpecas[k+1].peca[0] == pecaMesa[28].ladoE || Tpecas[k+1].peca[1] == pecaMesa[28].ladoD || Tpecas[k+1].peca[1] == pecaMesa[28].ladoE)
+									printf("\nEssa peca pode ser jogada!");
+							}
+							else if(Tpecas[k+1].local=='j')
+								Tpecas[k+cont+1].local='a';
+								printf("\n%d- ( %d | %d )", k+cont+1, Tpecas[k+cont+1].peca[0], Tpecas[k+cont+1].peca[1]);
+								if(Tpecas[k+cont+1].peca[0] != pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[0] != pecaMesa[28].ladoE || Tpecas[k+cont+1].peca[1] != pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[1] != pecaMesa[28].ladoE)
+									printf("\nA peca comprada nao pode ser jogada! voce tem que comprar outra peca!");
+									k--;
+								if(Tpecas[k+cont+1].peca[0] == pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[0] == pecaMesa[28].ladoE || Tpecas[k+cont+1].peca[1] == pecaMesa[28].ladoD || Tpecas[k+cont+1].peca[1] == pecaMesa[28].ladoE)
+									printf("\nEssa peca pode ser jogada!");
 						}
+					}
 				}
-			}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
-		}
+			}
+		}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
+		//faz o loop de comprar peça até possuir uma peça que possui um número que pode ser jogado
 	}
 }
