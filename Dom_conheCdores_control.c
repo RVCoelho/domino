@@ -110,16 +110,8 @@ void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
 		{
 			if(Tpecas[i].local=='d')
 			{
-				if(Tpecas[i].peca[0]==extremidadeE || Tpecas[i].peca[1]==extremidadeD)
-				{
-					Tpecas[i].local='j';
-					break;
-				}
-				else
-				{
-					Tpecas[i].local='j';
-					printf("\nEssa peca nao pode ser jogada [ %d | %d ], outra peca sera comprada\n", Tpecas[i].peca[0], Tpecas[i].peca[1]);
-				}
+				Tpecas[i].local='j';
+				break;
 			}
 		}
 	}
@@ -129,16 +121,8 @@ void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
 		{
 			if(Tpecas[i].local=='d')
 			{
-				if(Tpecas[i].peca[0]==extremidadeE || Tpecas[i].peca[1]==extremidadeD)
-				{
-					Tpecas[i].local='a';
-					break;
-				}
-				else
-				{
-					Tpecas[i].local='a';
-					printf("\nEssa peca nao pode ser jogada [ %d | %d ], outra peca sera comprada\n", Tpecas[i].peca[0], Tpecas[i].peca[1]);
-				}
+				Tpecas[i].local='a';
+				break;
 			}
 		}
 	}
