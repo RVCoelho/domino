@@ -8,7 +8,7 @@ void geraPeca(pecas Tpecas[28]);
 void embaralha(pecas Tpecas[28]);
 void distribui(pecas Tpecas[28]);
 void compraPeca(pecas Tpecas[28], mesa pecaMesa[28]);
-
+int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]);
 
 void Domino(pecas Tpecas[28], mesa pecaMesa[28])
 {
@@ -182,4 +182,78 @@ void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
 		}while(Tpecas[i].peca[0] != pecaMesa[28].ladoD || Tpecas[i].peca[0] != pecaMesa[28].ladoE || Tpecas[i].peca[1] != pecaMesa[28].ladoD || Tpecas[i].peca[1] != pecaMesa[28].ladoE);
 		//faz o loop de comprar peça até possuir uma peça que possui um número que pode ser jogado
 	}
+}
+
+
+/*int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28])
+{
+	int x;
+	
+	y=y-1;
+	if(Tpecas[y].peca[0]==extremidadeD || extremidadeE)
+	{
+		x=1; //1 = peca que pode ser jogada na mesa
+	}
+	else if(Tpecas[y].peca[1]==extremidadeD || extremidadeE)
+	{
+		x=1;
+	}
+	else
+	{
+		x=2 //2 = peca que n pode ser jogada
+	}
+	
+	return x;
+}*/
+
+int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]) //retorna o y=1 ou y=2,1 peca foi do jogador 1 ou 2 
+{	
+														
+	int i, x=0, maior=0, y;
+
+	for(i=0;i<28;i++)
+	{
+		if(Tpecas[i].local!='d')
+		{
+			if(Tpecas[i].peca[0]==Tpecas[i].peca[1])
+			{
+				if(Tpecas[i].peca[0]>maior)
+				{
+					maior=Tpecas[i].peca[1];
+					x=i;
+				}
+			}
+		}
+	}
+	if(maior==0)
+	{
+		for(i=0;i<28;i++)
+		{
+			if(Tpecas[i].peca[0]+Tpecas[i].peca[1]>maior)
+			{
+				maior=Tpecas[i].peca[0]+Tpecas[i].peca[1];
+				x=i;
+			}
+		}
+	}
+	if(x<7)
+	{
+		y=1;
+	}
+	else
+	{
+		y=2;
+	}
+	//passa a peca da mao do jogador para a mesa
+	pecaMesa[0].pecaJogada[0]=Tpecas[x].peca[0];
+	pecaMesa[0].pecaJogada[1]=Tpecas[x].peca[1];
+	//define o locar da 1 peca para a mesa
+	Tpecas[x].local='m';
+	//aumenta o numero de rodadas para 1
+	pecaMesa[0].rodadas=1;
+	//define os lados da peca jogada
+	pecaMesa[0].ladoE=Tpecas[x].peca[0];
+	pecaMesa[0].ladoD=Tpecas[x].peca[1];
+	//retorna quem foi o primeiro jogador
+	return y;
 }
