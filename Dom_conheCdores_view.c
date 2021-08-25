@@ -7,7 +7,6 @@ void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28]);
 
 void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28]);
 
-int PrimeiraJogada(pecas Tepcas[28], mesa pecaMesa[28]);
 
 void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28]);
 
@@ -75,57 +74,6 @@ void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28])
 }
 
 //funcao para definir a primeira peca a ser jogada
-int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]) //retorna o y=1 ou y=2,1 peca foi do jogador 1 ou 2 
-{	
-														
-	int i, x=0, maior=0, y;
-
-	for(i=0;i<28;i++)
-	{
-		if(Tpecas[i].local!='d')
-		{
-			if(Tpecas[i].peca[0]==Tpecas[i].peca[1])
-			{
-				if(Tpecas[i].peca[0]>maior)
-				{
-					maior=Tpecas[i].peca[1];
-					x=i;
-				}
-			}
-		}
-	}
-	if(maior==0)
-	{
-		for(i=0;i<28;i++)
-		{
-			if(Tpecas[i].peca[0]+Tpecas[i].peca[1]>maior)
-			{
-				maior=Tpecas[i].peca[0]+Tpecas[i].peca[1];
-				x=i;
-			}
-		}
-	}
-	if(x<7)
-	{
-		y=1;
-	}
-	else
-	{
-		y=2;
-	}
-	//passa a peca da mao do jogador para a mesa
-	pecaMesa[0].pecaJogada[0]=Tpecas[x].peca[0];
-	pecaMesa[0].pecaJogada[1]=Tpecas[x].peca[1];
-	//define o locar da 1 peca para a mesa
-	Tpecas[x].local='m';
-	//aumenta o numero de rodadas para 1
-	pecaMesa[0].rodadas=1;
-	//define os lados da peca jogada
-	pecaMesa[0].ladoE=Tpecas[x].peca[0];
-	pecaMesa[0].ladoD=Tpecas[x].peca[1];
-	//retorna quem foi o primeiro jogador
-	return y;
-}
 
 //funcao apenas para mostrar de quem foi a primeira peca a ser jogada
 void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28])
@@ -171,6 +119,8 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 		case 'j':
 			printf("escolha a peca que deseja jogar:");
 			scanf("%d", &y);
+			y=y-1;
+			printf("%d-  %d-%d\n", y, Tpecas[y].peca[0], Tpecas[y].peca[0]);
 			printf("teste\n");
 			
 				
