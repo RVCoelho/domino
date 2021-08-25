@@ -1,6 +1,5 @@
 //arquivo model
-
-
+int qualJogador;
 
 typedef struct gera
 {
