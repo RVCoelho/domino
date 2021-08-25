@@ -1,6 +1,9 @@
 //view
 //#include<stdio.h>
 
+//view
+//#include<stdio.h>
+
 
 int menu();
 void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28]);
@@ -38,25 +41,26 @@ void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28])
 	int y, i;
 	
 	printf("\n-------------\n");
+	printf("MESA:   ");
 	for(i=0;i<pecaMesa->rodadas;i++)
 	{
-		printf("MESA: [ %d | %d ]\n", pecaMesa[0].pecaJogada[0], pecaMesa[0].pecaJogada[1]);
+		printf("[ %d | %d ]", pecaMesa[i].pecaJogada[0], pecaMesa[i].pecaJogada[1]);
 	}
-	printf("-------------\n");
+	printf("\n-------------\n");
 	
 }
 
 void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28])
 {
 	int i, x;
-	x=PrimeiraJogada(Tpecas, pecaMesa);
-	if(x==2)
+	x=qualJogador;
+	if(x%2!=0)
 	{
 		printf("Jogador 1 pecas:");
 		for(i=0;i<28;i++)
 		{
 		if(Tpecas[i].local=='j')
-			printf(" %d- (%d | %d ) ", i+1,  Tpecas[i].peca[0], Tpecas[i].peca[1]);
+			printf(" %d- [ %d | %d ] ", i+1,  Tpecas[i].peca[0], Tpecas[i].peca[1]);
 		}
 	}
 	else
@@ -65,12 +69,10 @@ void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28])
 		for(i=0;i<28;i++)
 		{
 		if(Tpecas[i].local=='a')
-			printf(" %d- (%d | %d ) ", i+1,  Tpecas[i].peca[0], Tpecas[i].peca[1]);
+			printf(" %d- [ %d | %d ] ", i+1,  Tpecas[i].peca[0], Tpecas[i].peca[1]);
 		}
 	}
 	printf("\n------------\n");
-	
-	
 }
 
 //funcao para definir a primeira peca a ser jogada
@@ -109,7 +111,7 @@ char opcoesPjogar( mesa pecaMesa[28])
 void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 {
 	char c;
-	int y;
+	int x=0, y;
 		
 	c=opcoesPjogar(pecaMesa);
 	
@@ -117,21 +119,22 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 	{
 
 		case 'j':
-			printf("escolha a peca que deseja jogar:");
-			scanf("%d", &y);
-			y=y-1;
-			printf("%d-  %d-%d\n", y, Tpecas[y].peca[0], Tpecas[y].peca[0]);
-			printf("teste\n");
-			
-				
-			
-				
+			while(x!=1)
+			{
+				printf("escolha a peca que deseja jogar:");
+				scanf("%d", &y);
+				y=y-1;
+				x=verifica(y, Tpecas, pecaMesa);
+				printf("%d\n", x);
+				if(x==2)
+					printf("\nA peca escolhida nao pode ser jogada.\n");
+			}
+			adicionaNaMesa(y, Tpecas, pecaMesa);
+			apresentaMesa(Tpecas, pecaMesa);
 			break;
 		case 'c':
-			
-			
+			compraPeca(Tpecas, pecaMesa);
+			pecasJogador(Tpecas, pecaMesa);
 			break;
 	}
-	
-	
 }
