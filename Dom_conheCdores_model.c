@@ -1,5 +1,8 @@
 //arquivo model
+
 int qualJogador;
+int extremidadeD;
+int extremidadeE;
 
 typedef struct gera
 {
