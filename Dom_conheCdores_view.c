@@ -16,6 +16,7 @@ char opcoesPjogar(mesa pecaMesa[28]);
 
 void Jogadas(pecas Tpeca[28], mesa pecaMesa[28]);
 
+void regras();
 
 int menu()
 {
@@ -101,14 +102,13 @@ char opcoesPjogar( mesa pecaMesa[28])
 	printf(" Opcao:");
 	scanf("%s", &c);
 	
-	
 	return (c);
 }
 
 void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 {
 	char c, a='o';
-	int x=0, y;
+	int x=0, y, t, i, cont=0;
 		
 	c=opcoesPjogar(pecaMesa);
 	
@@ -122,20 +122,39 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 				scanf("%d", &y);
 				y=y-1;
 				x=verifica(y, Tpecas, pecaMesa);
-				if(x==2){
+				if(x==2)
+				{
 					printf("\nA peca escolhida nao pode ser jogada.\n");
-				}
-				if(Tpecas[y].peca[0]== extremidadeD || extremidadeE)
-				{
-					printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
-					scanf("%c", &a);
-				}
-				else if(Tpecas[y].peca[1]== extremidadeD || extremidadeE)
-				{
-					printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
-					scanf("%c", &a);
-				}
-
+					printf("se voce nao possui nenhuma peca que possa ser jogada\n");
+					printf("digite 1 para escolher outra opcao\n");
+					printf("caso voce tenha outra peca que possa ser jogada, digite 2\n");
+					printf("opcao: ");
+					scanf("%d", &t);
+					if(t==1){
+						break;
+					}	
+				}	
+				
+			}
+			if(Tpecas[y].peca[0] == extremidadeD && Tpecas[y].peca[0] == extremidadeE)
+			{
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				scanf("%s", &a);
+			}
+			else if(Tpecas[y].peca[1] == extremidadeD && Tpecas[y].peca[1] == extremidadeE)
+			{
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				scanf("%s", &a);
+			}
+			else if(Tpecas[y].peca[0] == extremidadeD && Tpecas[y].peca[1] == extremidadeE)
+			{
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				scanf("%s", &a);
+			}
+			else if(Tpecas[y].peca[1] == extremidadeD && Tpecas[y].peca[0] == extremidadeE)
+			{
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				scanf("%s", &a);
 			}
 			adicionaNaMesa(y, a, Tpecas, pecaMesa);
 			apresentaMesa(Tpecas, pecaMesa);
@@ -144,7 +163,44 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 		case 'c':
 
 			compraPeca(Tpecas, pecaMesa);
-			pecasJogador(Tpecas, pecaMesa);
+			break;
+
+		case 'p':
+
+				for(i=0; i<28; i++)
+				{
+					if(Tpecas[i].local=='d')
+					{
+						cont++;
+					}	
+				}
+				if(cont!=0)
+				{
+					printf("\nvoce ainda pode comprar uma peca, logo nao pode passar a vez\n");
+				}
+				else if(cont == 0)
+				{
+					qualJogador++;
+				}
+
+
+			break;
+
+		case 's':
+			printf("OBRIGADO POR JOGAR\n");
+			exit(NULL);
 			break;
 	}
+}
+
+void regras()
+{
+	printf("o jogo e composto por 28 pecas, cada extremidade da peca possui 2 numeros de 0 a 6\n");
+	printf("cada jogador comeca com 7 pecas em sua mao, e a pilha de compra tem 14 pecas\n");
+	printf("o jogador com a maior pedra comeca, isso e feito automaticamente pelo computador\n");
+	printf("Cada jogador deve tentar encaixar uma de suas pedras nas extremidades do jogo na mesa\n");
+	printf("Quando o jogador consegue encaixar uma pedra ele passa a vez\n");
+	printf("caso ele nao consiga ele deve comprar, se nao houver pedras no monte ele passara a vez\n");
+	printf("ganha o jogador que ficar sem pecas primeiro\n"); 
+
 }
