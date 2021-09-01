@@ -1,8 +1,5 @@
 //view
-//#include<stdio.h>
 
-//view
-//#include<stdio.h>
 
 
 int menu();
@@ -44,7 +41,7 @@ void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28])
 	printf("MESA:   ");
 	for(i=0;i<pecaMesa->rodadas;i++)
 	{
-		printf("[ %d | %d ]", pecaMesa[i].pecaJogada[0], pecaMesa[i].pecaJogada[1]);
+		printf(" [ %d | %d ]", pecaMesa[i].pecaJogada[0], pecaMesa[i].pecaJogada[1]);
 	}
 	printf("\n-------------\n");
 	
@@ -98,6 +95,7 @@ char opcoesPjogar( mesa pecaMesa[28])
 	printf(" j- jogar(possiveis: %d ou %d)\n", extremidadeE, extremidadeD);
 	printf(" c- Comprar\n");
 	printf(" p- Passar a vez, se possivel\n");
+	printf(" t- salvar e sair do jogo\n");
 	printf(" s- Sair(interromper o jogo)\n");
 	printf(" Opcao:");
 	scanf("%s", &c);
@@ -138,22 +136,22 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 			}
 			if(Tpecas[y].peca[0] == extremidadeD && Tpecas[y].peca[0] == extremidadeE)
 			{
-				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
 			else if(Tpecas[y].peca[1] == extremidadeD && Tpecas[y].peca[1] == extremidadeE)
 			{
-				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
 			else if(Tpecas[y].peca[0] == extremidadeD && Tpecas[y].peca[1] == extremidadeE)
 			{
-				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
 			else if(Tpecas[y].peca[1] == extremidadeD && Tpecas[y].peca[0] == extremidadeE)
 			{
-				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo)");
+				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
 			adicionaNaMesa(y, a, Tpecas, pecaMesa);
@@ -181,6 +179,7 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 				else if(cont == 0)
 				{
 					qualJogador++;
+					apresentaMesa(Tpecas, pecaMesa);
 				}
 
 
@@ -190,6 +189,11 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 			printf("OBRIGADO POR JOGAR\n");
 			exit(NULL);
 			break;
+
+		case 't':
+			GravaJogo(Tpecas, pecaMesa);
+			exit(NULL);
+
 	}
 }
 
