@@ -4,6 +4,10 @@ int qualJogador;
 int extremidadeD;
 int extremidadeE;
 
+FILE *ap;
+FILE *am;
+FILE *av;
+
 typedef struct gera
 {
 	int peca[2];
