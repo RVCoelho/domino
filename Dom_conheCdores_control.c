@@ -12,41 +12,52 @@ int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]);
 void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28]);
 int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28]);
 int AcabaJogo(int y, pecas Tpecas[28]);
+int Empate(pecas Tpecas[28]);
+void GravaJogo(pecas Tpecas[28], mesa pecaMesa[28]);
 
 void Domino(pecas Tpecas[28], mesa pecaMesa[28])
 {
 	int o, y, h=0;
-	o=menu();
-	switch(o)
+	while (o!=5)
 	{
-		case 1://novo jogo
-			geraPeca(Tpecas);
-			embaralha(Tpecas);
-			distribui(Tpecas);
-			PrimeiraJogada(Tpecas, pecaMesa);
-			mostraPrimeiroJogador(Tpecas, pecaMesa);
-			apresentaMesa(Tpecas, pecaMesa);
-			while(h!=2)
-			{
-				pecasJogador(Tpecas, pecaMesa);
-				Jogadas(Tpecas,pecaMesa);
-				h=AcabaJogo(qualJogador, Tpecas);
-			}
-			printf("\nOBRIGADO POR JOGAR\n");
-			break;
-			
-		case 2:
-			printf("");	
-			break;
-				
-		case 4:
-			regras();
+		o=menu();
+		switch(o)
+		{
+			case 1://novo jogo
+				geraPeca(Tpecas);
+				embaralha(Tpecas);
+				distribui(Tpecas);
+				PrimeiraJogada(Tpecas, pecaMesa);
+				mostraPrimeiroJogador(Tpecas, pecaMesa);
+				apresentaMesa(Tpecas, pecaMesa);
+				while(h!=2)
+				{
+					pecasJogador(Tpecas, pecaMesa);
+					h=Empate(Tpecas);
+					if(h==2)
+						break;
+					Jogadas(Tpecas,pecaMesa);
+					h=AcabaJogo(qualJogador, Tpecas);
+				}
+				printf("\nOBRIGADO POR JOGAR\n");
+				break;
 
-			break;
-		case 5:
-			printf("OBRIGADO POR JOGAR");
-			break;
-	}
+			case 2:
+				printf("");	
+				break;
+			
+			case 3:	
+
+				break;
+			case 4:
+				regras();
+
+				break;
+			case 5:
+				printf("OBRIGADO POR JOGAR");
+				break;
+		}
+	}	
 }
 
 void geraPeca(pecas Tpecas[28])
@@ -113,7 +124,7 @@ void distribui(pecas Tpecas[28])
 
 
 
-int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28])
+int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28])//funcao que verifica se a peca escolhida pode ser jogada na mesa
 {
 	int x;
 	
@@ -134,11 +145,11 @@ int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28])
 }
 
 int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]) //retorna o y=1 ou y=2,1 peca foi do jogador 1 ou 2 
-{	
+{	//funcao que realiza a primeira jogada do jogo, pois a primeira jogada é automatica
 														
 	int i, x=0, maior=0, y;
 
-	for(i=0;i<28;i++)
+	for(i=0;i<28;i++)//descobre a maior peca se tiver alguma com numero igual
 	{
 		if(Tpecas[i].local!='d')
 		{
@@ -154,7 +165,7 @@ int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]) //retorna o y=1 ou y=2,1
 	}
 	if(maior==0)
 	{
-		for(i=0;i<28;i++)
+		for(i=0;i<28;i++)//descobre a maior peca pela soma dos numeros dos lados
 		{
 			if(Tpecas[i].peca[0]+Tpecas[i].peca[1]>maior)
 			{
@@ -166,7 +177,7 @@ int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28]) //retorna o y=1 ou y=2,1
 	if(x<7)
 	{
 		y=1;
-		qualJogador=2;
+		qualJogador=2; //variavel para saber qual é o jogador que esta na vez
 	}
 	else
 	{
@@ -209,7 +220,7 @@ void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28])
 				pecaMesa[0].pecaJogada[0]=Tpecas[x].peca[0];
 				pecaMesa[0].pecaJogada[1]=Tpecas[x].peca[1];
 				extremidadeE=Tpecas[x].peca[0];
-				extremidadeD=pecaMesa[y].pecaJogada[1];//
+				extremidadeD=pecaMesa[y].pecaJogada[1];
 			}
 			else//caso a peca esteja virada do lado errado
 			{
@@ -218,14 +229,14 @@ void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28])
 				extremidadeE=Tpecas[x].peca[1];
 				extremidadeD=pecaMesa[y].pecaJogada[1];//
 			}
-			Tpecas[x].local='m';
-			pecaMesa[0].rodadas=pecaMesa[0].rodadas+1;
-			qualJogador++;
+			Tpecas[x].local='m';//muda o local da peca para a mesa
+			pecaMesa[0].rodadas=pecaMesa[0].rodadas+1;//aumenta o numero de rodadas 
+			qualJogador++;//passa a vez para o proximo jogador
 		}
-		else if(Tpecas[x].peca[0]==extremidadeD||Tpecas[x].peca[1]==extremidadeD)
+		else if(Tpecas[x].peca[0]==extremidadeD||Tpecas[x].peca[1]==extremidadeD)//caso a peca tenha q ir para a extremidade direita da mesa
 		{
-			pecaMesa[y].pecaJogada[1]=Tpecas[x].peca[1];
-			pecaMesa[y].pecaJogada[0]=Tpecas[x].peca[0];
+			pecaMesa[y].pecaJogada[1]=Tpecas[x].peca[1];//so adicionando uma peca na extremidade direita
+			pecaMesa[y].pecaJogada[0]=Tpecas[x].peca[0];//so adicionando uma peca na extremidade direita
 
 			if(extremidadeD!=pecaMesa[y].pecaJogada[0])//caso a peca esteja virada do lado errado
 			{
@@ -234,14 +245,14 @@ void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28])
 				pecaMesa[y].pecaJogada[1]=k;
 			}
 			Tpecas[x].local='m';
-			extremidadeD=pecaMesa[y].pecaJogada[1];
-			pecaMesa[0].rodadas=pecaMesa[0].rodadas+1;
-			qualJogador++;
+			extremidadeD=pecaMesa[y].pecaJogada[1];//muda a extremidade da mesa para a nova peca
+			pecaMesa[0].rodadas=pecaMesa[0].rodadas+1;//aumenta o numero de rodadas
+			qualJogador++;//passa a vez para o proximo jogador
 		}
 
 
 	}
-	else if(a=='e')
+	else if(a=='e')//caso o jogador escolha jogar no lado esquerdo
 	{
 		for(i=y; i>0; i--)//joga a mesa para a direita para incerir uma peca na esquerda
 		{
@@ -266,7 +277,7 @@ void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28])
 		pecaMesa[0].rodadas=pecaMesa[0].rodadas+1;
 		qualJogador++;
 	}
-	else if(a=='d')
+	else if(a=='d')//caso o jogador escolha jogar no lado direito
 	{
 		pecaMesa[y].pecaJogada[0]=Tpecas[x].peca[0];
 		pecaMesa[y].pecaJogada[1]=Tpecas[x].peca[1];
@@ -285,8 +296,8 @@ void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28])
 	}	
 }
 
-int AcabaJogo( int y, pecas Tpecas[28])
-{
+int AcabaJogo( int y, pecas Tpecas[28])//funcao que verifica se resta alguma peca na mao do jogador que acabou de jogar
+{									   //caso o jogador esteja sem pecas, entao a funcao retorna 2 que encerra o jogo e o declara como vencedor	
 	int cont=0, i;	
 	y=y-1;
 	if(y%2!=0)
@@ -322,7 +333,7 @@ int AcabaJogo( int y, pecas Tpecas[28])
 }	
 
 
-void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
+void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])//funcao que compra pecas da mesa e insere na mao do jogador q a comprou
 {
 	int i, x, k, cont;
 	x=qualJogador;
@@ -334,6 +345,10 @@ void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
 			{
 				Tpecas[i].local='j';
 				break;
+			}
+			else
+			{
+
 			}
 		}
 	}
@@ -349,4 +364,113 @@ void compraPeca(pecas Tpecas[28], mesa pecaMesa[28])
 		}
 	}
 }
-	
+
+int Empate(pecas Tpecas[28])
+{
+	int i, cont=0, x=0, result1=0, result2=0;;
+
+	for(i=0;i<28;i++)
+	{
+		if(Tpecas[i].local=='d')
+		{
+			cont++;
+		}
+	}
+	if(cont==0)
+	{
+		for(i=0;i<28;i++)
+		{
+			if(Tpecas[i].local=='j')
+			{
+				if(Tpecas[i].peca[0]==extremidadeD || Tpecas[i].peca[0]==extremidadeE)
+				{
+					x++;
+				}
+				else if(Tpecas[i].peca[1]==extremidadeD || Tpecas[i].peca[1]==extremidadeE)
+				{
+					x++;
+				}
+			}
+		}
+		for(i=0;i<28;i++)
+		{
+			if(Tpecas[i].local=='a')
+			{
+				if(Tpecas[i].peca[0]==extremidadeD || Tpecas[i].peca[0]==extremidadeE)
+				{
+					x++;
+				}
+				else if(Tpecas[i].peca[1]==extremidadeD || Tpecas[i].peca[1]==extremidadeE)
+				{
+					x++;
+				}
+			}
+		}
+		if(x==0)
+		{
+			for(i=0;i<28;i++)
+			{
+				if(Tpecas[i].local=='j')
+				{
+					result1=result1+Tpecas[i].peca[0]+Tpecas[i].peca[1];
+				}
+			}
+			for(i=0;i<28;i++)
+			{
+				if(Tpecas[i].local=='a')
+				{
+					result2=result2+Tpecas[i].peca[0]+Tpecas[i].peca[1];
+				}
+			}
+			if(result1>result2)
+			{
+				printf("o jogador 1 ganhou o jogo");
+				return 2;
+			}
+			else if(result2>result1)
+			{
+				printf("o jogador 2 ganhou o jogo");
+				return 2;
+			}
+			else if(result1==result2)
+			{
+				printf("o jogo empatou");
+				return 2;
+			}
+		}
+	}
+	else
+	{
+		return 1;
+	}	
+}
+
+void GravaJogo(pecas Tpecas[28], mesa pecaMesa[28])
+{
+	int i, y;
+	y=pecaMesa->rodadas;
+	if(ap=fopen("PecasJ", "w")==NULL)
+	{
+		printf("O arquivo PecasJ nao pode ser aberto para gravacao");
+	}
+	for(i=0;i<28;i++)
+	{
+		if(fwrite(&Tpecas[i], sizeof(pecas),1,ap))
+		{
+			printf("erro na gravacao do arquivo pecasJ");
+		}
+	}
+
+	if(am=fopen("PecasM", "w")==NULL)
+	{
+		printf("O arquivo PecasM nao pode ser aberto para gravacao");
+	}
+	for(i=0;i<y;i++)
+	{
+		if(fwrite(&pecaMesa[i], sizeof(mesa),1,ap))
+		{
+			printf("erro na gravacao do arquivo pecasM");
+		}
+	}
+}	
+
