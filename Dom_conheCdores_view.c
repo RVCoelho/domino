@@ -3,17 +3,21 @@
 
 
 int menu();
-void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28]);
+void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
 
-void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28]);
+void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
 
-void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28]);
+void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
 
-char opcoesPjogar(mesa pecaMesa[28]);
+char opcoesPjogar(mesa pecaMesa[28], Variaveis VA[1]);
 
-void Jogadas(pecas Tpeca[28], mesa pecaMesa[28]);
+void Jogadas(pecas Tpeca[28], mesa pecaMesa[28], Variaveis VA[1]);
 
 void regras();
+
+void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+
+void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
 
 int menu()
 {
@@ -33,13 +37,12 @@ int menu()
 }
 
 
-void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28])
+void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 {
 	int y, i;
-	
 	printf("\n-------------\n");
 	printf("MESA:   ");
-	for(i=0;i<pecaMesa->rodadas;i++)
+	for(i=0;i<VA[0].rodadas;i++)
 	{
 		printf(" [ %d | %d ]", pecaMesa[i].pecaJogada[0], pecaMesa[i].pecaJogada[1]);
 	}
@@ -47,10 +50,10 @@ void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28])
 	
 }
 
-void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28])
+void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 {
 	int i, x;
-	x=qualJogador;
+	x=VA[0].qualJogador;
 	if(x%2!=0)
 	{
 		printf("Jogador 1 pecas:");
@@ -72,11 +75,31 @@ void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28])
 	printf("\n------------\n");
 }
 
+void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
+{
+	int i, x;
+	x=VA[0].qualJogador;
+	if(x%2==0)
+	{
+		printf("Jogador 1 pecas:");
+		for(i=0;i<28;i++)
+		{
+		if(Tpecas[i].local=='j')
+			printf(" %d- [ %d | %d ] ", i+1,  Tpecas[i].peca[0], Tpecas[i].peca[1]);
+		}
+	}
+	else
+	{
+		printf("o computador vai jogar agora");
+	}
+	printf("\n------------\n");
+}
+
 //funcao apenas para mostrar de quem foi a primeira peca a ser jogada
-void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28])
+void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 {
 	int y;
-	y=PrimeiraJogada(Tpecas, pecaMesa);
+	y=PrimeiraJogada(Tpecas, pecaMesa, VA);
 	if(y==1)
 	{
 		printf("\na primeira jogada foi jogador 1, pois tem a maior peca\n");
@@ -88,11 +111,27 @@ void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28])
 	printf("\n");
 }
 
-char opcoesPjogar( mesa pecaMesa[28])
+void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
+{
+	int y;
+	y=PrimeiraJogada(Tpecas, pecaMesa, VA);
+	if(y==1)
+	{
+		printf("\na primeira jogada foi jogador 1, pois tem a maior peca\n");
+	}
+	else
+	{
+		printf("\na primeira jogada foi do computador, pois tem a maior peca\n");
+	}
+	printf("\n");
+}
+
+
+char opcoesPjogar( mesa pecaMesa[28], Variaveis VA[1])
 {
 	char c;
 	
-	printf(" j- jogar(possiveis: %d ou %d)\n", extremidadeE, extremidadeD);
+	printf(" j- jogar(possiveis: %d ou %d)\n", VA[0].extremidadeE, VA[0].extremidadeD);
 	printf(" c- Comprar\n");
 	printf(" p- Passar a vez, se possivel\n");
 	printf(" t- salvar e sair do jogo\n");
@@ -103,12 +142,12 @@ char opcoesPjogar( mesa pecaMesa[28])
 	return (c);
 }
 
-void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
+void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 {
 	char c, a='o';
 	int x=0, y, t, i, cont=0;
 		
-	c=opcoesPjogar(pecaMesa);
+	c=opcoesPjogar(pecaMesa, VA);
 	
 	switch (c)
 	{
@@ -119,7 +158,7 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 				printf("escolha a peca que deseja jogar:");
 				scanf("%d", &y);
 				y=y-1;
-				x=verifica(y, Tpecas, pecaMesa);
+				x=verifica(y, Tpecas, pecaMesa, VA);
 				if(x==2)
 				{
 					printf("\nA peca escolhida nao pode ser jogada.\n");
@@ -134,33 +173,33 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 				}	
 				
 			}
-			if(Tpecas[y].peca[0] == extremidadeD && Tpecas[y].peca[0] == extremidadeE)
+			if(Tpecas[y].peca[0] == VA[0].extremidadeD && Tpecas[y].peca[0] == VA[0].extremidadeE)
 			{
 				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
-			else if(Tpecas[y].peca[1] == extremidadeD && Tpecas[y].peca[1] == extremidadeE)
+			else if(Tpecas[y].peca[1] == VA[0].extremidadeD && Tpecas[y].peca[1] == VA[0].extremidadeE)
 			{
 				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
-			else if(Tpecas[y].peca[0] == extremidadeD && Tpecas[y].peca[1] == extremidadeE)
+			else if(Tpecas[y].peca[0] == VA[0].extremidadeD && Tpecas[y].peca[1] == VA[0].extremidadeE)
 			{
 				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
-			else if(Tpecas[y].peca[1] == extremidadeD && Tpecas[y].peca[0] == extremidadeE)
+			else if(Tpecas[y].peca[1] == VA[0].extremidadeD && Tpecas[y].peca[0] == VA[0].extremidadeE)
 			{
 				printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
 				scanf("%s", &a);
 			}
-			adicionaNaMesa(y, a, Tpecas, pecaMesa);
-			apresentaMesa(Tpecas, pecaMesa);
+			adicionaNaMesa(y, a, Tpecas, pecaMesa, VA);
+			apresentaMesa(Tpecas, pecaMesa, VA);
 			break;
 
 		case 'c':
 
-			compraPeca(Tpecas, pecaMesa);
+			compraPeca(Tpecas, pecaMesa, VA);
 			break;
 
 		case 'p':
@@ -178,8 +217,8 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 				}
 				else if(cont == 0)
 				{
-					qualJogador++;
-					apresentaMesa(Tpecas, pecaMesa);
+					VA[0].qualJogador++;
+					apresentaMesa(Tpecas, pecaMesa, VA);
 				}
 
 
@@ -191,7 +230,7 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28])
 			break;
 
 		case 't':
-			GravaJogo(Tpecas, pecaMesa);
+			//GravaJogo(Tpecas, pecaMesa);
 			exit(NULL);
 
 	}
