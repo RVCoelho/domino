@@ -1,9 +1,10 @@
-// jogo DOMINÓ 
+// jogo DOMINO 
 //Grupo: conheCdores
-//Victor Padilha
-//Arthur Bonjardim
-//Ricardo Veiga
-//Joao Antonio Malheiros
+//integrantes:
+	//Victor Padilha
+	//Arthur Bonjardim
+	//Ricardo Veiga
+	//Joao Antonio Malheiros
 
 
 #include <stdio.h>
@@ -19,8 +20,10 @@ int main()
 {
 	pecas Tpecas[28];
 	mesa pecaMesa[28];
+	Variaveis VA[1];
 	
-	Domino(Tpecas, pecaMesa);
+	Domino(Tpecas, pecaMesa, VA);
 	
 return 0;
 }
+
