@@ -18,9 +18,6 @@
 int main()
 
 {
-	pecas Tpecas[28];
-	mesa pecaMesa[28];
-	Variaveis VA[1];
 	
 	Domino(Tpecas, pecaMesa, VA);
 	
