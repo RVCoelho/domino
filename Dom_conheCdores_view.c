@@ -19,6 +19,8 @@ void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Vari
 
 void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
 
+void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+
 int menu()
 {
 	int x;
@@ -79,7 +81,7 @@ void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[
 {
 	int i, x;
 	x=VA[0].qualJogador;
-	if(x%2==0)
+	if(x%2!=0)
 	{
 		printf("Jogador 1 pecas:");
 		for(i=0;i<28;i++)
@@ -90,6 +92,7 @@ void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[
 	}
 	else
 	{
+		printf("\n");
 		printf("o computador vai jogar agora");
 	}
 	printf("\n------------\n");
@@ -126,7 +129,6 @@ void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Vari
 	printf("\n");
 }
 
-
 char opcoesPjogar( mesa pecaMesa[28], Variaveis VA[1])
 {
 	char c;
@@ -152,6 +154,7 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 	switch (c)
 	{
 
+		case 'J':
 		case 'j':
 			while(x!=1)
 			{
@@ -197,11 +200,13 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 			apresentaMesa(Tpecas, pecaMesa, VA);
 			break;
 
+		case 'C':
 		case 'c':
 
 			compraPeca(Tpecas, pecaMesa, VA);
 			break;
 
+		case 'P':
 		case 'p':
 
 				for(i=0; i<28; i++)
@@ -224,16 +229,127 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 
 			break;
 
+		case 'S':
 		case 's':
 			printf("OBRIGADO POR JOGAR\n");
 			exit(NULL);
 			break;
 
+		case 'T':
 		case 't':
-			//GravaJogo(Tpecas, pecaMesa);
+			GravaJogo(Tpecas, pecaMesa, VA);
 			exit(NULL);
+			break;
 
 	}
+}
+
+void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
+{
+	char c, a='o';
+	int x=0, y, t, i, cont=0, J=VA[0].qualJogador;
+
+	if(J%2!=0)
+	{
+		c=opcoesPjogar(pecaMesa, VA);
+	
+		switch (c)
+		{
+
+			case 'J':
+			case 'j':
+				while(x!=1)
+				{
+					printf("escolha a peca que deseja jogar:");
+					scanf("%d", &y);
+					y=y-1;
+					x=verifica(y, Tpecas, pecaMesa, VA);
+					if(x==2)
+					{
+						printf("\nA peca escolhida nao pode ser jogada.\n");
+						printf("se voce nao possui nenhuma peca que possa ser jogada\n");
+						printf("digite 1 para escolher outra opcao\n");
+						printf("caso voce tenha outra peca que possa ser jogada, digite 2\n");
+						printf("opcao: ");
+						scanf("%d", &t);
+						if(t==1){
+							break;
+						}	
+					}	
+
+				}
+				if(Tpecas[y].peca[0] == VA[0].extremidadeD && Tpecas[y].peca[0] == VA[0].extremidadeE)
+				{
+					printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
+					scanf("%s", &a);
+				}
+				else if(Tpecas[y].peca[1] == VA[0].extremidadeD && Tpecas[y].peca[1] == VA[0].extremidadeE)
+				{
+					printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
+					scanf("%s", &a);
+				}
+				else if(Tpecas[y].peca[0] == VA[0].extremidadeD && Tpecas[y].peca[1] == VA[0].extremidadeE)
+				{
+					printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
+					scanf("%s", &a);
+				}
+				else if(Tpecas[y].peca[1] == VA[0].extremidadeD && Tpecas[y].peca[0] == VA[0].extremidadeE)
+				{
+					printf("escolha o lado da mesa para jogar(d=direito, e=esquerdo):");
+					scanf("%s", &a);
+				}
+				adicionaNaMesa(y, a, Tpecas, pecaMesa, VA);
+				apresentaMesa(Tpecas, pecaMesa, VA);
+				break;
+
+			case 'C':
+			case 'c':
+				compraPeca(Tpecas, pecaMesa, VA);
+			break;
+
+			case 'P':
+			case 'p':
+
+					for(i=0; i<28; i++)
+					{
+						if(Tpecas[i].local=='d')
+						{
+							cont++;
+						}	
+					}
+					if(cont!=0)
+					{
+						printf("\nvoce ainda pode comprar uma peca, logo nao pode passar a vez\n");
+					}
+					else if(cont == 0)
+					{
+						VA[0].qualJogador++;
+					apresentaMesa(Tpecas, pecaMesa, VA);
+					}
+
+
+				break;
+			
+			case 'S':
+			case 's':
+				printf("OBRIGADO POR JOGAR\n");
+				exit(NULL);
+				break;
+
+			case 'T':
+			case 't':
+				printf("voce nao pode salvar um jogo contra o computador");
+				//GravaJogo(Tpecas, pecaMesa, VA);
+				break;
+
+		}
+	}
+	else
+	{
+		ComputadorJogando(Tpecas, pecaMesa, VA);
+		apresentaMesa(Tpecas, pecaMesa, VA);
+
+	}	
 }
 
 void regras()
