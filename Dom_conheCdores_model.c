@@ -28,3 +28,8 @@ typedef struct Tvariaveis
 	int rodadas;	
 
 } Variaveis;
+
+
+pecas Tpecas[28];
+mesa pecaMesa[28];
+Variaveis VA[1];	
