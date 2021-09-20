@@ -356,10 +356,13 @@ void regras()
 {
 	printf("o jogo e composto por 28 pecas, cada extremidade da peca possui 2 numeros de 0 a 6\n");
 	printf("cada jogador comeca com 7 pecas em sua mao, e a pilha de compra tem 14 pecas\n");
-	printf("o jogador com a maior pedra comeca, isso e feito automaticamente pelo computador\n");
-	printf("Cada jogador deve tentar encaixar uma de suas pedras nas extremidades do jogo na mesa\n");
-	printf("Quando o jogador consegue encaixar uma pedra ele passa a vez\n");
-	printf("caso ele nao consiga ele deve comprar, se nao houver pedras no monte ele passara a vez\n");
+	printf("o jogador com a maior peca comeca, isso e feito automaticamente pelo computador\n");
+	printf("Cada jogador deve tentar encaixar uma de suas pecas nas extremidades do jogo na mesa\n");
+	printf("Quando o jogador consegue encaixar uma peca ele passa a vez\n");
+	printf("caso ele nao consiga ele deve comprar, ate ter uma peca jogavel\n");
+	printf("se nao houver pecas no na pilha de compra ele passara a vez\n");
+	printf("O jogador pode comprar peca caso ele ja tenha uma peca jogavel\n");
 	printf("ganha o jogador que ficar sem pecas primeiro\n"); 
-
+	printf("ou caso não existam pecas na pilha de compras e nenhum dos dois jogadores pode jogar alguma peca\n");
+	printf("ganha o jogador que tiver a menor quantidade de pontos de pecas\n");
 }
