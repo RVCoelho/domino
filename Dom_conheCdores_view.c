@@ -3,23 +3,23 @@
 
 
 int menu();
-void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void apresentaMesa(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta a mesa
 
-void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void pecasJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que mostra todas as pecas de um dos jogadores
 
-void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void mostraPrimeiroJogador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta quem foi o primeiro a jogar
 
-char opcoesPjogar(mesa pecaMesa[28], Variaveis VA[1]);
+char opcoesPjogar(mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta as opcoes dos jogadores
 
-void Jogadas(pecas Tpeca[28], mesa pecaMesa[28], Variaveis VA[1]);
+void Jogadas(pecas Tpeca[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta as opcaos dentro de uma jogada
 
-void regras();
+void regras();//funcao que apresenta as regras
 
-void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta quem foi o primeiro jogador qunado jogando contra o computador
 
-void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void pecasJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta as pecas do jogador quando jogando contra o computador
 
-void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que apresenta as opcoes dentro de uma jogada quando jogando contra o computador
 
 int menu()
 {
@@ -129,7 +129,7 @@ void mostraPrimeiroJogadorVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Vari
 	printf("\n");
 }
 
-char opcoesPjogar( mesa pecaMesa[28], Variaveis VA[1])
+char opcoesPjogar( mesa pecaMesa[28], Variaveis VA[1])//mudar para porcemtagem C
 {
 	char c;
 	
@@ -141,6 +141,7 @@ char opcoesPjogar( mesa pecaMesa[28], Variaveis VA[1])
 	printf(" Opcao:");
 	scanf("%s", &c);
 	
+
 	return (c);
 }
 
@@ -150,7 +151,6 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 	int x=0, y, t, i, cont=0;
 		
 	c=opcoesPjogar(pecaMesa, VA);
-	
 	switch (c)
 	{
 
@@ -165,7 +165,6 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 				if(x==2)
 				{
 					printf("\nA peca escolhida nao pode ser jogada.\n");
-					printf("se voce nao possui nenhuma peca que possa ser jogada\n");
 					printf("digite 1 para escolher outra opcao\n");
 					printf("caso voce tenha outra peca que possa ser jogada, digite 2\n");
 					printf("opcao: ");
@@ -204,6 +203,7 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 		case 'c':
 
 			compraPeca(Tpecas, pecaMesa, VA);
+			apresentaMesa(Tpecas, pecaMesa, VA);
 			break;
 
 		case 'P':
@@ -238,6 +238,7 @@ void Jogadas(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 		case 'T':
 		case 't':
 			GravaJogo(Tpecas, pecaMesa, VA);
+			printf("o jogo foi salvo com sucesso!!!! :)");
 			exit(NULL);
 			break;
 
@@ -267,7 +268,6 @@ void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 					if(x==2)
 					{
 						printf("\nA peca escolhida nao pode ser jogada.\n");
-						printf("se voce nao possui nenhuma peca que possa ser jogada\n");
 						printf("digite 1 para escolher outra opcao\n");
 						printf("caso voce tenha outra peca que possa ser jogada, digite 2\n");
 						printf("opcao: ");
@@ -305,6 +305,7 @@ void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 			case 'C':
 			case 'c':
 				compraPeca(Tpecas, pecaMesa, VA);
+				apresentaMesa(Tpecas, pecaMesa, VA);
 			break;
 
 			case 'P':
@@ -338,7 +339,7 @@ void JogadasVScomputador(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 
 			case 'T':
 			case 't':
-				printf("voce nao pode salvar um jogo contra o computador");
+				printf("voce nao pode salvar um jogo contra o computador\n");
 				//GravaJogo(Tpecas, pecaMesa, VA);
 				break;
 
@@ -365,4 +366,5 @@ void regras()
 	printf("ganha o jogador que ficar sem pecas primeiro\n"); 
 	printf("ou caso não existam pecas na pilha de compras e nenhum dos dois jogadores pode jogar alguma peca\n");
 	printf("ganha o jogador que tiver a menor quantidade de pontos de pecas\n");
+
 }
