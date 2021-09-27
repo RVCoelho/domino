@@ -3,37 +3,37 @@
 
 
 
-void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao principal do jogo
 
-void geraPeca(pecas Tpecas[28]);
+void geraPeca(pecas Tpecas[28]);//funcao que gera todas as pecas do jogo
 
-void embaralha(pecas Tpecas[28]);
+void embaralha(pecas Tpecas[28]);//funcao que embaralha as pecas
 
-void distribui(pecas Tpecas[28]);
+void distribui(pecas Tpecas[28]);//funcao que distribui as pecas para cada jogador e para o monte
 
-void compraPeca(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void compraPeca(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao para comprar uma peca dentro do jogo
 
-int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+int PrimeiraJogada(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao para realizar a primeira jogada do jogo
 
-void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void adicionaNaMesa(int x, char a, pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que adiciona a peca selecionada na mesa
 
-int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que verifica se a peca selecionada pode entrar na mesa
 
-int AcabaJogo(int y, pecas Tpecas[28]);
+int AcabaJogo(int y, pecas Tpecas[28]);//funcao que verifica se o jogo acabou
 
-int Empate(pecas Tpecas[28], Variaveis VA[1]);
+int Empate(pecas Tpecas[28], Variaveis VA[1]);//funcao que verifica se ouve um empate no jogo
 
-void GravaJogo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void GravaJogo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que grava o jogo
 
-void LerJogoSalvo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void LerJogoSalvo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que le o jogo salvo
 
-void ComputadorJogando(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);
+void ComputadorJogando(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1]);//funcao que faz as jogadas para o computador
 
-int AcabaJogoVScomputador( int y, pecas Tpecas[28]);
+int AcabaJogoVScomputador( int y, pecas Tpecas[28]);//funcao que verifica se o jogo acabou qunado jogando contra o computador
 
-int EmpateVScomputador(pecas Tpecas[28], Variaveis VA[1]);
+int EmpateVScomputador(pecas Tpecas[28], Variaveis VA[1]);//funcao que verifica um empata no jogo quando jogando contra o computador
 
-void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
+void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//funcao principal do jogo
 {
 	int o, y, h=0;
 	while (o!=5)
@@ -41,7 +41,7 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 		o=menu();
 		switch(o)
 		{
-			case 1://novo jogo
+			case 1://novo jogo pessoa vs pessoa
 				geraPeca(Tpecas);
 				embaralha(Tpecas);
 				distribui(Tpecas);
@@ -60,7 +60,7 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 				exit(NULL);
 				break;
 
-			case 2:
+			case 2://novo jogo contra o computador
 				geraPeca(Tpecas);
 				embaralha(Tpecas);
 				distribui(Tpecas);
@@ -78,7 +78,7 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 				exit(NULL);
 				break;
 			
-			case 3:	
+			case 3://comeca o jogo a partir da leitura de um jogo salvo
 				LerJogoSalvo(Tpecas, pecaMesa, VA);
 				apresentaMesa(Tpecas, pecaMesa, VA);
 				while(h!=2)
@@ -93,11 +93,11 @@ void Domino(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])
 				printf("\nOBRIGADO POR JOGAR\n");
 
 				break;
-			case 4:
+			case 4://regras do jogo
 				regras();
 
 				break;
-			case 5:
+			case 5://sai fo jogo
 				printf("OBRIGADO POR JOGAR");
 				break;
 		}
@@ -168,21 +168,52 @@ void distribui(pecas Tpecas[28])
 
 int verifica(int y, pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//funcao que verifica se a peca escolhida pode ser jogada na mesa
 {
-	int x;
-	
-	if(Tpecas[y].peca[0]==VA[0].extremidadeD || Tpecas[y].peca[1]==VA[0].extremidadeD)
+	int x, a;
+	a=VA[0].qualJogador;
+	if(a%2!=0)
 	{
-		x=1; //1 = peca que pode ser jogada na mesa
-	}
-	else if(Tpecas[y].peca[0]==VA[0].extremidadeE|| Tpecas[y].peca[1]==VA[0].extremidadeE)
-	{
-		x=1;
+		if(Tpecas[y].local=='j')
+		{
+			if(Tpecas[y].peca[0]==VA[0].extremidadeD || Tpecas[y].peca[1]==VA[0].extremidadeD)
+			{
+				x=1; //1 = peca que pode ser jogada na mesa
+			}
+			else if(Tpecas[y].peca[0]==VA[0].extremidadeE|| Tpecas[y].peca[1]==VA[0].extremidadeE)
+			{
+				x=1;
+			}
+			else
+			{
+				x=2; //2 = peca que nao pode ser jogada
+			}
+		}
+		else
+		{
+			x=2;//a peca que ele escolheu nao e dele
+		}
 	}
 	else
 	{
-		x=2; //2 = peca que nao pode ser jogada
+		if(Tpecas[y].local=='a')
+		{
+			if(Tpecas[y].peca[0]==VA[0].extremidadeD || Tpecas[y].peca[1]==VA[0].extremidadeD)
+			{
+				x=1; //1 = peca que pode ser jogada na mesa
+			}
+			else if(Tpecas[y].peca[0]==VA[0].extremidadeE|| Tpecas[y].peca[1]==VA[0].extremidadeE)
+			{
+				x=1;
+			}
+			else
+			{
+				x=2; //2 = peca que nao pode ser jogada
+			}
+		}
+		else
+		{
+			x=2;//a peca que ele escolheu nao e dele
+		}
 	}
-	
 	return x;
 }
 
@@ -607,40 +638,41 @@ int EmpateVScomputador(pecas Tpecas[28], Variaveis VA[1])//funcao que verifica p
 
 void GravaJogo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//nao esta funciando
 {
-	FILE *ap;
-	FILE *am;
-	FILE *av;
-
+	
 	int i, y;
 	y=VA[0].rodadas;
-	if(ap=fopen("PecasJ", "w") == NULL)
+	if((ap=fopen("PecasJ", "w")) == NULL)// if((ap = fopen("PecasJ", "w")) == NULL)//pecasJ sao as pecas dos jogadores
 	{
 		printf("O arquivo PecasJ nao pode ser aberto para gravacao");
+		//return;
 	}
 	for(i=0;i<28;i++)
 	{
-		if(fwrite(&Tpecas[i], sizeof(struct MaoJogador),1,ap) != 1)
+		if(fwrite(&Tpecas[i], sizeof(pecas),1,ap) != 1)
 		{
 			printf("erro na gravacao do arquivo pecasJ\n");
+			//return;
 		}
 	}
 
 	fclose(ap);
 
-	if(am=fopen("PecasM", "w")==NULL)
+	if((am=fopen("PecasM", "w"))==NULL)//pecasM sao as pecas da mesa
 	{
 		printf("O arquivo PecasM nao pode ser aberto para gravacao");
+		return;
 	}
 	for(i=0;i<y;i++)
 	{
 		if(fwrite(&pecaMesa[i], sizeof(mesa),1,am)!=1)
 		{
 			printf("erro na gravacao do arquivo pecasM");
+			return;
 		}
 	}
 	fclose(am);
 
-	if(av=fopen("variaveis", "w")==NULL)
+	if((av=fopen("variaveis", "w"))==NULL)//variaveis sao as variaveis do jogo
 	{
 		printf("o arquivo variaveis nao pode ser aberto para gravacao");
 	}
@@ -653,9 +685,6 @@ void GravaJogo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//nao esta f
 
 void LerJogoSalvo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//nao esta funcionado
 {
-	FILE *ap;
-	FILE *am;
-	FILE *av;
 
 	int i;
 
@@ -665,14 +694,14 @@ void LerJogoSalvo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//nao est
 	}
 	for(i=0;i<28;i++)
 	{
-		if(fread(&pecaMesa[i], sizeof(mesa),1,ap)!=1)
+		if(fread(&Tpecas[i], sizeof(pecas),1,ap)!=1)
 		{
 			printf("erro na leitura do arquivo pecasM");
 		}
 	}
 	fclose(ap);
 
-	if(av=fopen("variaveis", "r")==NULL)
+	if((av=fopen("variaveis", "r"))==NULL)
 	{
 		printf("o arquivo variaveis nao pode ser aberto para gravacao");
 	}
@@ -692,7 +721,7 @@ void LerJogoSalvo(pecas Tpecas[28], mesa pecaMesa[28], Variaveis VA[1])//nao est
 		if(fread(&pecaMesa[i], sizeof(mesa),1,ap)!=1)
 		{
 			printf("erro na leitura do arquivo pecasM");
-			break;
+			
 		}
 	}
 	fclose(am);
